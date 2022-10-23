@@ -1,0 +1,114 @@
+/*
+ * uart_prot.h
+ *
+ *  Created on: Sep 3, 2022
+ *      Author: akcel
+ */
+
+#ifndef UART_PROT_UART_PROT_H_
+#define UART_PROT_UART_PROT_H_
+#include <stdint.h>
+#include  "global_var.h"
+const uint8_t kSizeOfBuffs = 100;
+
+enum commands {
+	kSetRefTemp = 't',
+	kSetParam = 's',
+	kGetParameter = 'g',
+	kGetAllGraphs = 'p'		//отпрака сех значений через запятую см черед ардуино иде)
+};
+enum parameters {
+	kChoiceOfutySetter = 's',
+	kduty = 'y',
+	kPidC = 'c',
+	kPidd = 'd',
+	kPidI = 'i',
+	kPidP = 'p',
+	kPidMaxOut = 'u',
+	kPidMinOut = 'w',
+	kPwmFreq = 'f'
+};
+
+enum class errors {
+	kNoError = 0,
+	kSyntacsisError = 1
+
+};
+
+enum class programTimerState {
+	kOn,
+	kOff
+};
+
+class programTimer {
+	programTimerState state;
+	uint32_t callback_count_val;
+	uint32_t counter;
+	virtual void timer_callback() {};
+
+public:
+	programTimer()
+	{
+		this->state = programTimerState::kOff;
+		this->callback_count_val = 0;
+		this->counter = 0;
+	}
+	void timerInit(uint32_t delay, uint32_t main_freq)
+	{
+		this->callback_count_val = main_freq * delay / 1000;
+	}
+	void timerUpdate()
+	{
+		if(this->state == programTimerState::kOff) return;
+		this->counter++;
+		if((this->counter >= this->callback_count_val) && (this->state == programTimerState::kOn))
+		{
+			this->rx_len -= 1;
+			this->timer_callback();
+
+			this->counter = 0;
+			this->timerStop();
+		}
+	}
+	void timerStop()
+	{
+		this->state = programTimerState::kOff;
+		//this->counter = 0;
+	}
+	void timerStart()
+	{
+		this->state = programTimerState::kOn;
+		this->counter = 0;
+	}
+};
+
+class uartProt : programTimer {
+	uint8_t rx_buf[kSizeOfBuffs];
+	uint8_t rx_len;
+
+	globalVar* global_var_p;
+	errors com_err;
+	bool res_ready;
+	bool get_all_graphs_mode;
+	void timer_callback() {this->parse();}
+	void reseiveOneByte(uint8_t byte) {this->rx_buf[this->rx_len++] = byte;}
+	void parse();
+	float stringToFloat(uint8_t start, uint8_t end);
+	void parseErrors();
+	void okRes();
+public:
+	uint8_t tx_buf[kSizeOfBuffs];
+	uint8_t tx_len;
+	uartProt(globalVar* global_var_p, uint32_t timer_freq);
+	bool getResReadyFlag() {return this->res_ready;}
+	void resTransmit() {this->res_ready = false;}
+	void update()
+	{
+		this->timerUpdate();
+	}
+	void rxCallback(uint8_t new_rx_byte);
+
+
+};
+
+#endif /* UART_PROT_UART_PROT_H_ */

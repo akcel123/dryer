@@ -1,0 +1,2 @@
+../global_var/global_var.cpp:14:6:void globalVarInit(globalVar*, uint32_t)	16	static
+../global_var/global_var.cpp:23:13:void SetAllValue(globalVar*)	24	static

@@ -1,0 +1,10 @@
+../TM74HC595/tm1637.cpp:16:6:void writeByte(int8_t)	32	static
+../TM74HC595/tm1637.cpp:53:6:void start()	8	static
+../TM74HC595/tm1637.cpp:64:6:void stop()	8	static
+../TM74HC595/tm1637.cpp:75:6:void display_mass(int8_t*)	32	static
+../TM74HC595/tm1637.cpp:102:6:void display(uint8_t, int8_t)	32	static
+../TM74HC595/tm1637.cpp:122:6:void clearDisplay()	8	static
+../TM74HC595/tm1637.cpp:130:6:void set_brightness(uint8_t)	16	static
+../TM74HC595/tm1637.cpp:135:6:void point(uint8_t)	16	static
+../TM74HC595/tm1637.cpp:141:6:void coding_mass(int8_t*)	24	static
+../TM74HC595/tm1637.cpp:155:8:int8_t coding(int8_t)	24	static

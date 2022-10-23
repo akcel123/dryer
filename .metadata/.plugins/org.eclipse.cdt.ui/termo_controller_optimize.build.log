@@ -1,0 +1,10 @@
+12:26:30 **** Incremental Build of configuration Debug for project termo_controller_optimize ****
+make -j4 all 
+arm-none-eabi-size   termo_controller_optimize.elf 
+   text	   data	    bss	    dec	    hex	filename
+    452	      8	   1568	   2028	    7ec	termo_controller_optimize.elf
+Finished building: default.size.stdout
+ 
+
+12:26:31 Build Finished. 0 errors, 0 warnings. (took 406ms)
+

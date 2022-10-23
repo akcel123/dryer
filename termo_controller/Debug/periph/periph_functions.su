@@ -1,0 +1,2 @@
+../Drivers/CMSIS/Include/core_cm0.h:623:22:void __NVIC_EnableIRQ(IRQn_Type)	16	static
+../periph/periph_functions.cpp:11:6:void slowFlowInit()	48	static

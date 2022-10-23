@@ -1,0 +1,5 @@
+../modbus_rtu/program_timer.c:3:6:ProgramTimerUpdate	16	static
+../modbus_rtu/program_timer.c:14:17:ProgramTimerInit	32	static
+../modbus_rtu/program_timer.c:25:17:ProgramTimerInitFloat	32	static
+../modbus_rtu/program_timer.c:35:7:ProgramTimerOn	16	static
+../modbus_rtu/program_timer.c:41:7:ProgramTimerOff	16	static
